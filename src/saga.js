@@ -1,18 +1,17 @@
 import {put, race, takeLatest} from 'redux-saga/effects';
 import {
   REQUEST_HELLO_WORLD,
-  recieveHelloWorld
+  recieveHelloWorld,
+  requestHelloWorld
 } from './actions/actions';
 import Api from './api/Api';
 
 function* getDogs() {
   try {
-    yield put({
-      type: REQUEST_HELLO_WORLD,
-      data: recieveHelloWorld(yield race(Api.getDogs())),
-    });
+    const data = yield requestHelloWorld(yield Api.getDogsRequest());
+    console.log('data', data);
   } catch (e) {
-    yield put(recieveHelloWorld);
+    console.log('Not Work', e);
   }
 }
  

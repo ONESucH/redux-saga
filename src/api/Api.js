@@ -1,8 +1,8 @@
 export default ({
-  getDogs: () => {
+  getDogsRequest: () => {
     return fetch('https://dog.ceo/api/breeds/image/random')
-      .then((res) => { return res.json() })
-      .then((result) => { return result })
+      .then((res) => res.json())
+      .then((result) => result)
       .catch((err) => err)
   }
 })
