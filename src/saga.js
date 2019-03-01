@@ -1,21 +1,25 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import {put, race, takeLatest} from 'redux-saga/effects';
+import {
+  REQUEST_HELLO_WORLD,
+  recieveHelloWorld
+} from './actions/actions';
 import Api from './api/Api';
 
-function* fetchUser(action) {
-    console.log('action', action);
-    try {
-        const data = yield call(Api.fetchUser, action.payload);
-        yield put({
-            type: 'USER_FETCH_SUCCESS',
-            data: data
-        });
-    } catch (e) {
-        yield put({type: 'USER_FETCH_ERROR', message: e.message});
-    }
+function* getDogs() {
+  try {
+    yield put({
+      type: REQUEST_HELLO_WORLD,
+      data: recieveHelloWorld(yield race(Api.getDogs())),
+    });
+  } catch (e) {
+    yield put(recieveHelloWorld);
+  }
 }
-
+ 
 function* mySaga() {
-    yield takeLatest('USER_FETCH_REQUESTED', fetchUser);
+  yield takeLatest(REQUEST_HELLO_WORLD, getDogs);
 }
 
-export default mySaga;
+export default (
+  mySaga 
+);

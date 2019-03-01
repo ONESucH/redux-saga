@@ -1,20 +1,23 @@
-import Api from '../api/Api';
+export const REQUEST_HELLO_WORLD = 'REQUEST_HELLO_WORLD';
+export const RECIEVE_HELLO_WORLD = 'REQUEST_HELLO_WORLD';
+export const ERR_HELLO_WORLD = 'ERR_HELLO_WORLD';
 
-export const scope = 'USER_FETCH_REQUESTED';
-
-export const getDataUsers = (dispatch, getState) => {
-    Api.fetchUser({
-        onSuccess: (data) => console.log(data),
-        onError: (message) => console.log(message)
-    });
+export const recieveHelloWorld = (state) => {
+  return {
+    type: RECIEVE_HELLO_WORLD,
+    data: state.data
+  }
 };
 
-export const USER_FETCH_REQUESTED = () => {
-    
+export const requestHelloWorld = (state) => {
+  return ({
+    type: REQUEST_HELLO_WORLD,
+    data: state
+  })
 };
-export const USER_FETCH_SUCCESS = () => {
-    
-};
-export const USER_FETCH_ERROR = () => {
-    
+
+export const errHelloWorld = () => {
+  return {
+    type: ERR_HELLO_WORLD
+  }
 };

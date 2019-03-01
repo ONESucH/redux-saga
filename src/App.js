@@ -1,46 +1,59 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import {requestHelloWorld} from './actions/actions';
+
 import Page from './page/Page';
 
-import './App.css';
+import logo from './logo.svg';
 
 class App extends Component {
 
-    state = {
-        title: 'Title'
-    };
-    
-    constructor(props) {
-        super(props);
-        
-        const {store} = this.props;
-        
-        console.log('store', store);
-    }
+  state = {
+    title: 'Title'
+  };
 
-    onSomeButtonClicked() {
-        const { userId, dispatch } = this.props;
-        console.log('userId', userId);
-        console.log('dispatch', dispatch);
+  componentDidMount() {
 
-        dispatch({type: 'USER_FETCH_REQUESTED', payload: {userId}})
-    }
+    const {requestHelloWorld} = this.props;
 
-    render() {
-        return (
-            <div className="App">
-                <h2>{this.state.title}</h2>
-                <div className="content">
-                    {this.state.title && <div style={{maxWidth: '100px'}}>
-                        <img src={logo} alt="logo" />
-                    </div>}
-                    <Page
-                        event={this.onSomeButtonClicked.bind(this)}
-                    />
-                </div>
-            </div>
-        );
-    }
+    requestHelloWorld();
+
+    console.log('this.props', this.props);
+  }
+
+  render() {
+    const {helloWorld} = this.props;
+    return (
+      <div className="App">
+        {helloWorld.type}
+        <h2>{this.state.title}</h2>
+        <div className="content">
+          {this.state.title && <div style={{maxWidth: '100px'}}>
+            <img src={logo} alt="logo"/>
+          </div>}
+          <Page/>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default App;
+
+const mapStateToProps = (state) => {
+  return {
+    helloWorld: state.helloWorld
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    requestHelloWorld
+  }, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
