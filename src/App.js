@@ -3,9 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {
-  successHelloWorld,
-  requestHelloWorld,
-  errHelloWorld
+  requestHelloWorld
 } from './actions/actions';
 
 import Page from './page/Page';
@@ -17,29 +15,22 @@ class App extends Component {
   state = {
     title: 'Title'
   };
-
+  
   componentWillMount() {
-
-    const {
-      successHelloWorld,
-      requestHelloWorld,
-      errHelloWorld
-    } = this.props;
-
-    successHelloWorld();
-    requestHelloWorld();
-    errHelloWorld();
+    this.props.requestHelloWorld();
   }
   
-  componentDidMount() {
-    console.log('this.props', this.props);
+  componentDidUpdate() {
+    // чтобы увидеть в консоли результат - нужно убидиться, что функция асинхронная была выполнена.
+    // Асинхронные функции в componentWillMount до загрузки DOM нужно вешать переменные на теги
+    // и после чего ожидается завершение получения данных от сервера и обновления react состояний.
+    console.log('this.props', this.props); 
   }
 
   render() {
-    const {helloWorld} = this.props;
     return (
       <div className="App">
-        {helloWorld.type}
+        <p>{this.props.helloWorld}</p>
         <h2>{this.state.title}</h2>
         <div className="content">
           {this.state.title && <div style={{maxWidth: '100px'}}>
@@ -58,9 +49,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  successHelloWorld,
-  requestHelloWorld,
-  errHelloWorld
+    requestHelloWorld
 }, dispatch);
 
 export default connect(
