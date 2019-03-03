@@ -4,30 +4,23 @@ import {
   ERR_HELLO_WORLD
 } from '../actions/actions';
 
-const defaultStateReducer = {
-  data: {
-    status: false,
-    message: 'Default state'
-  }
-};
-
-export default (state = defaultStateReducer, action) => {
+export default (state = '', action) => {
   console.log('action', action);
   switch (action.type) {
     case REQUEST_HELLO_WORLD:
       return ({
         type: REQUEST_HELLO_WORLD,
-        ...action
+        data: action.data
       });
     case SUCCESS_HELLO_WORLD:
       return {
-        type: SUCCESS_HELLO_WORLD, 
-        ...action
+        type: SUCCESS_HELLO_WORLD,
+        data: action.data
       };
     case ERR_HELLO_WORLD:
       return {
         type: ERR_HELLO_WORLD,
-        ...action
+        err: action.err
       };
     default:
       return state;
