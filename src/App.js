@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {requestHelloWorld} from './actions/actions';
+import {
+  successHelloWorld,
+  requestHelloWorld,
+  errHelloWorld
+} from './actions/actions';
 
 import Page from './page/Page';
 
@@ -14,12 +18,20 @@ class App extends Component {
     title: 'Title'
   };
 
-  componentDidMount() {
+  componentWillMount() {
 
-    const {requestHelloWorld} = this.props;
+    const {
+      successHelloWorld,
+      requestHelloWorld,
+      errHelloWorld
+    } = this.props;
 
+    successHelloWorld();
     requestHelloWorld();
-
+    errHelloWorld();
+  }
+  
+  componentDidMount() {
     console.log('this.props', this.props);
   }
 
@@ -41,17 +53,15 @@ class App extends Component {
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    helloWorld: state.helloWorld
-  }
-};
+const mapStateToProps = state => ({
+  helloWorld: state.helloWorld
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    requestHelloWorld
-  }, dispatch);
-};
+const mapDispatchToProps = dispatch => bindActionCreators({
+  successHelloWorld,
+  requestHelloWorld,
+  errHelloWorld
+}, dispatch);
 
 export default connect(
   mapStateToProps,

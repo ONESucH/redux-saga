@@ -1,24 +1,25 @@
-import {put, race, takeLatest} from 'redux-saga/effects';
+import {put, call, takeLatest} from 'redux-saga/effects';
+import Api from './api/Api';
 import {
   REQUEST_HELLO_WORLD,
-  recieveHelloWorld,
-  requestHelloWorld
+
+  successHelloWorld,
+  errHelloWorld
 } from './actions/actions';
-import Api from './api/Api';
 
 function* getDogs() {
   try {
-    const data = yield requestHelloWorld(yield Api.getDogsRequest());
-    console.log('data', data);
-  } catch (e) {
-    console.log('Not Work', e);
+    const requestDogs = yield Api.getDogsRequest();
+    yield put(successHelloWorld(requestDogs));
+  } catch (err) {
+    yield put(errHelloWorld(err));
   }
 }
  
-function* mySaga() {
+function* mySagaWatcher() {
   yield takeLatest(REQUEST_HELLO_WORLD, getDogs);
 }
 
 export default (
-  mySaga 
+  mySagaWatcher 
 );
