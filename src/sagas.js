@@ -1,14 +1,15 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-//import Api from '...'
+import Api from './api/Api'
 import {REQUEST_HELLO_WORLD, recieveHelloWorld} from './actions/actions';
-
 
 function* helloWorld(action) {
   try {
-    //const user = yield call(Api.fetchUser, action.payload.userId);
-    yield put(recieveHelloWorld('hello world saga.js!!'));
+    const dog = put(yield Api.getDogsRequest());
+    const saveObj = dog.payload.action; 
+    console.log('saveObj', saveObj);
+    yield put(recieveHelloWorld('hello world saga.js!!', saveObj));
   } catch (e) {
-    yield put(recieveHelloWorld('Is not hello world saga.js!!'));
+    yield put(recieveHelloWorld('Is not hello world saga.js!!', e));
   }
 }
 
