@@ -1,7 +1,7 @@
 export const DOG_REQUEST = 'DOG_REQUEST';
 export const DOG_RECIEVE = 'DOG_RECIEVE';
 
-export const dogRequest = () => ({
+export const actionDogRequest = () => ({
   type: DOG_REQUEST
 });
 

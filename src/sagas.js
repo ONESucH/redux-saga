@@ -5,7 +5,6 @@ import {DOG_REQUEST, dogRecieve} from './actions/actions-dog-request';
 
 // WRITE TEXT - HELLO WORLD
 function* helloWorld(action) {
-  console.log('helloWorld');
   try {
     yield put(recieveHelloWorld('hello world saga.js!!'));
   } catch (e) {
@@ -14,13 +13,10 @@ function* helloWorld(action) {
 }
 
 // Dog request
-function* dogRequestTemplate() {
-  console.log('dogRequestTemplate');
+function* dogRequestTemplate(action) {
   try {
     const dog = put(yield Api.getDogsRequest());
-    const saveObj = dog.payload.action;
-    console.log('saveObj', saveObj);
-    yield put(dogRecieve(saveObj));
+    yield put(dogRecieve(dog.payload.action));
   } catch (err) {
     yield put(dogRecieve(err));
   }
@@ -29,5 +25,5 @@ function* dogRequestTemplate() {
 // WATCHERS
 export default function* mySaga() {
   yield takeLatest(REQUEST_HELLO_WORLD, helloWorld);
-  yield takeLatest(DOG_REQUEST, dogRequestTemplate);
+  yield takeEvery(DOG_REQUEST, dogRequestTemplate);
 }

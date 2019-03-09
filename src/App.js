@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { requestHelloWorld } from './actions/actions';
-import { dogRequest } from './actions/actions-dog-request';
+import { actionDogRequest } from './actions/actions-dog-request';
 
 import Page from './page/Page';
 
@@ -16,17 +16,33 @@ class App extends Component {
   };
   
   componentWillMount() {
-    const { requestHelloWorld, dogRequest } = this.props;
+    const { requestHelloWorld, actionDogRequest } = this.props;
     
     requestHelloWorld();
-    dogRequest();
+    actionDogRequest();
   }
   
   componentDidUpdate() {
     // чтобы увидеть в консоли результат - нужно убидиться, что функция асинхронная была выполнена.
     // Асинхронные функции в componentWillMount до загрузки DOM нужно вешать переменные на теги
     // и после чего ожидается завершение получения данных от сервера и обновления react состояний.
-    console.log('this.props', this.props); 
+    console.log('this.props', this.props);
+
+    this.showDogGlobal(this.props.dogRequest);
+  }
+  
+  // Покажу временно картинку через native js
+  showDogGlobal(obj) {
+    if (obj.message) {
+      let body = document.getElementsByTagName('body')[0],
+        img = document.createElement('img');
+
+      img.setAttribute('src', obj.message);
+      img.setAttribute('alt', 'dog');
+      img.setAttribute('title', obj.message);
+
+      body.appendChild(img);
+    }
   }
 
   render() {
@@ -47,7 +63,7 @@ class App extends Component {
 
 
 const mapStateToProps = state => {
-  console.log('APp compinent state', state);
+  console.log('App compinent state', state);
   return {
     helloWorld: state.helloWorld,
     dogRequest: state.dogRequest
@@ -56,7 +72,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     requestHelloWorld,
-    dogRequest
+    actionDogRequest
 }, dispatch);
 
 export default connect(
