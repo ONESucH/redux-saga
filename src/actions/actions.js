@@ -5,7 +5,8 @@ export const requestHelloWorld = () => ({
   type: REQUEST_HELLO_WORLD
 });
 
-export const recieveHelloWorld = (text) => ({
+export const recieveHelloWorld = (text, data) => ({
   type: RECIEVE_HELLO_WORLD, 
-  text
+  text,
+  data
 });

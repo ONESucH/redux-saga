@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {
-  requestHelloWorld
-} from './actions/actions';
+import { requestHelloWorld } from './actions/actions';
+import { dogRequest } from './actions/actions-dog-request';
 
 import Page from './page/Page';
 
@@ -17,7 +16,10 @@ class App extends Component {
   };
   
   componentWillMount() {
-    this.props.requestHelloWorld();
+    const { requestHelloWorld, dogRequest } = this.props;
+    
+    requestHelloWorld();
+    dogRequest();
   }
   
   componentDidUpdate() {
@@ -44,12 +46,17 @@ class App extends Component {
 }
 
 
-const mapStateToProps = state => ({
-  helloWorld: state.helloWorld
-});
+const mapStateToProps = state => {
+  console.log('APp compinent state', state);
+  return {
+    helloWorld: state.helloWorld,
+    dogRequest: state.dogRequest
+  }
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    requestHelloWorld
+    requestHelloWorld,
+    dogRequest
 }, dispatch);
 
 export default connect(
