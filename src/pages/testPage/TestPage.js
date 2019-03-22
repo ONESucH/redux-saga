@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
-import Button from '../../components/button/Button';
+import React from 'react';
+import Button from 'components/button/Button';
 
-class TestPage extends Component {
-    render() {
-        return <Button />
-    }
+function TestPage(props) {
+  return <Button {...props} />
 }
 
 export default TestPage;

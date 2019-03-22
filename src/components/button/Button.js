@@ -1,7 +1,8 @@
 import React from 'react';
 
-function Button() {
+function Button(props) {
   return <button
+    onClick={props.next}
     style={{
       background: 'silver',
       border: 'none',
