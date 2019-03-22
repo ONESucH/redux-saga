@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import { requestHelloWorld } from './actions/actions';
 import { actionDogRequest } from './actions/actions-dog-request';
 
-import Page from './page/Page';
+import Page from './pages/testPage/TestPage';
 
 import logo from './logo.svg';
 
